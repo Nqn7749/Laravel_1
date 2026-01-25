@@ -19,9 +19,10 @@
 </head>
 <body>
 
+<h1>{{ $title }}</h1>
 <h2>Danh sách sản phẩm</h2>
 
-<a href="{{ route('add') }}"> Thêm sản phẩm </a>
+<a href="{{ route('product.add') }}"> Thêm sản phẩm </a>
 
 <br><br>
 
@@ -31,29 +32,23 @@
             <th>STT</th>
             <th>Tên sản phẩm</th>
             <th>Giá</th>
-            <th>Chi tiết</th>
+            <th></th>Hành động</th>
         </tr>
     </thead>
 
     <tbody>
-        <tr>
-            <td>1</td>
-            <td>Sản phẩm A</td>
-            <td>100.000đ</td>
-            <td><a href="{{ route('product.detail', ['id' => 1]) }}">Xem chi tiết</a></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Sản phẩm B</td>
-            <td>200.000đ</td>
-            <td><a href="{{ route('product.detail', ['id' => 2]) }}">Xem chi tiết</a></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Sản phẩm C</td>
-            <td>300.000đ</td>
-            <td><a href="{{ route('product.detail', ['id' => 3]) }}">Xem chi tiết</a></td>
-        </tr>
+        @foreach ($products as $product)
+            <tr>
+                <td>{{ $product['id'] }}</td>
+                <td>{{ $product['name'] }}</td>
+                <td>{{ $product['price'] }}</td>
+                <td>
+                    <a href="{{ route('product.detail',  $product['id']) }}">
+                        Xem chi tiết
+                    </a>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 </table>
 

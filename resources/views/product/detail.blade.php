@@ -8,7 +8,7 @@
 
 <h2>Chi tiết sản phẩm</h2>
 
-<p><b>ID sản phẩm:</b> {{ $id }}</p>
+<p><b>ID sản phẩm:</b>{{ $id }} </p>
 
 <!-- NÚT QUAY LẠI -->
 <a href="{{ route('product.index') }}"> Quay lại danh sách sản phẩm</a>

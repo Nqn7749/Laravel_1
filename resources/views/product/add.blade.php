@@ -5,19 +5,26 @@
 </head>
 <body>
 
-<h2>Thêm sản phẩm mới</h2>
+<h2>Thêm sản phẩm</h2>
 
-<form>
-    <label>Tên sản phẩm</label><br>
-    <input type="text"><br><br>
+<form method="POST" action="{{ route('product.store') }}">
+    @csrf
 
-    <label>Giá</label><br>
-    <input type="number"><br><br>
+    <p>
+        Tên sản phẩm:
+        <input type="text" name="name">
+    </p>
 
-    <button type="submit">Thêm</button>
+    <p>
+        Giá:
+        <input type="number" name="price">
+    </p>
+
+    <button type="submit">Lưu</button>
 </form>
 
-<a href="{{ route('product.index') }}"> Quay lại </a>
+<br>
+<a href="{{ route('product.index') }}">⬅ Quay lại</a>
 
 </body>
 </html>

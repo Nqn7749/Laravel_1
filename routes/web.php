@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -10,22 +11,22 @@ Route::get('/hello', function () {
     return view('hello');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+Route::post('/checklogin', [ProductController::class, 'checkLogin']);
+
 Route::prefix('product')->group(function () {
-    Route::get('/', function () {
-        return view('product.index');
-    })->name('product.index');
-
-    Route::get('/add', function () {
-        return view('product.add');
-    })->name('add');
-
-    Route::get('/detail', function ($id) {
-        return view('product.detail', ['id' => $id]);
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/', 'index')->name('product.index');
+        Route::get('/add', 'create')->name('product.add');
+        Route::post('/add', 'store')->name('product.store');
+        Route::get('/detail/{id?}', 'getDetail')->name('product.detail');
     });
 
-    Route::get('/{id?}', function ($id = '123') {
-        return view('product.detail', ['id' => $id]);
-    })->name('product.detail');
+    // Route::get('/', [ProductController::class, 'index']);
+    // Route::get('/add', [ProductController::class,'create'])->name('product.add');
+    // Route::get('/detail/{id?}', [ProductController::class,'getDetail']);
 });
 
 Route::get('/sinhvien/{name?}/{mssv?}', function ($name = 'Luong Xuan Hieu', $mssv = '123456') {
