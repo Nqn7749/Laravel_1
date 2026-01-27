@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\checkTimeAccess;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ProductController extends Controller
+class ProductController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array{
+        return [
+            checkTimeAccess::class,
+        ];
+    }
     public function index(){
         $title = "Product List";
         return view('product.index', ['title'=>$title,
