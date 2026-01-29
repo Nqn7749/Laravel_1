@@ -45,11 +45,13 @@ class ProductController extends Controller implements HasMiddleware
     public function checkLogin(Request $request){
         $username = $request->input('username');
         $password = $request->input('password');
+        $age = $request->input('age');
 
         if($username === 'nghianq' && $password === '123456'){
-            return 'Đăng nhập thành công';
+            session(['age' => $age]);
+            return redirect('/product');
         } else {
-            return 'Đăng nhập thất bại';
+            return back()->with('error', 'Đăng nhập thất bại');
         }
     }
 }

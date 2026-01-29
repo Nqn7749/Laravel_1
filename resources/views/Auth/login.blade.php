@@ -21,7 +21,10 @@
         <input type="password" name="password">
     </p>
 
-   
+    <p>
+        Age:
+        <input type="number" name="age">
+    </p>
 
     <button type="submit">Đăng nhập</button>
 </form>

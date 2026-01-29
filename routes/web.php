@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\AuthController;
 use App\Http\Middleware\checkTimeAccess;
 
 use Illuminate\Support\Facades\Route;
@@ -15,7 +16,7 @@ Route::get('/hello', function () {
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('auth.login');
 })->middleware(checkTimeAccess::class);
 Route::post('/checklogin', [ProductController::class, 'checkLogin']);
 
