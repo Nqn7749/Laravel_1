@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Middleware\checkTimeAccess;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use App\Models\Product;
 
 class ProductController extends Controller implements HasMiddleware
 {
@@ -16,13 +17,9 @@ class ProductController extends Controller implements HasMiddleware
     }
     public function index(){
         $title = "Product List";
+        $product = Product::all();
         return view('product.index', ['title'=>$title,
-            'products' => [
-                ['id'=> 1, 'name'=> 'Product A', 'price'=> 100],
-                ['id'=> 2, 'name'=> 'Product B', 'price'=> 200],
-                ['id'=> 3, 'name'=> 'Product C', 'price'=> 300],
-            ]
-        ]);
+            'products' => $product]);
     }
 
     public function getDetail(string $id = '123'){
@@ -35,23 +32,33 @@ class ProductController extends Controller implements HasMiddleware
 
     public function store(Request $request)
     {
-        $name  = $request->input('name');
-        $price = $request->input('price');
+        $product = new Product();
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->save();
 
         return redirect()->route('product.index');
 
     }
 
-    public function checkLogin(Request $request){
-        $username = $request->input('username');
-        $password = $request->input('password');
-        $age = $request->input('age');
-
-        if($username === 'nghianq' && $password === '123456'){
-            session(['age' => $age]);
-            return redirect('/product');
-        } else {
-            return back()->with('error', 'Đăng nhập thất bại');
-        }
+    public function edit(string $id){
+        $product = Product::find($id);
+        return view('product.edit', ['product' => $product]);
     }
+
+    public function update(Request $request, string $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+        ]);
+
+        return redirect()->route('product.index');
+    }
+
 }

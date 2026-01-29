@@ -32,7 +32,8 @@
             <th>STT</th>
             <th>Tên sản phẩm</th>
             <th>Giá</th>
-            <th></th>Hành động</th>
+            <th>Số lượng</th>
+            <th>Hành động</th>
         </tr>
     </thead>
 
@@ -42,9 +43,13 @@
                 <td>{{ $product['id'] }}</td>
                 <td>{{ $product['name'] }}</td>
                 <td>{{ $product['price'] }}</td>
+                <td>{{ $product['stock'] }}</td>
                 <td>
-                    <a href="{{ route('product.detail',  $product['id']) }}">
+                    <a href="{{ route('product.detail', ['id' => $product['id']]) }}">
                         Xem chi tiết
+                    </a><br>
+                    <a href="{{ route('product.edit', ['id' => $product['id']]) }}">
+                        Sửa thông tin
                     </a>
                 </td>
             </tr>

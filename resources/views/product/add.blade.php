@@ -10,17 +10,14 @@
 <form method="POST" action="{{ route('product.store') }}">
     @csrf
 
-    <p>
-        Tên sản phẩm:
-        <input type="text" name="name">
-    </p>
+    <label for="name">Tên sản phẩm:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="price">Giá sản phẩm:</label>
+    <input type="number" id="price" name="price"><br><br>
+    <label for="stock">Số lượng:</label>
+    <input type="number" id="stock" name="stock"><br><br>
 
-    <p>
-        Giá:
-        <input type="number" name="price">
-    </p>
-
-    <button type="submit">Lưu</button>
+    <input type="submit" value="Thêm sản phẩm">
 </form>
 
 <br>

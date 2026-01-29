@@ -18,7 +18,7 @@ Route::get('/hello', function () {
 Route::get('/login', function () {
     return view('auth.login');
 });
-Route::post('/checklogin', [ProductController::class, 'checkLogin']);
+Route::post('/checklogin', [AuthController::class, 'checkLogin']);
 
 Route::get('/signup', [AuthController::class, 'signUp']);
 Route::post('/check-signup', [AuthController::class, 'checkSignUp']);
@@ -37,6 +37,8 @@ Route::prefix('product')->middleware([checkTimeAccess::class, checkAge::class])-
         Route::get('/add', 'create')->name('product.add');
         Route::post('/add', 'store')->name('product.store');
         Route::get('/detail/{id?}', 'getDetail')->name('product.detail');
+        Route::get('/edit/{id}', 'edit')->name('product.edit');
+        Route::put('/update/{id}', 'update')->name('product.update');
     });
 });
 
