@@ -4,7 +4,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\checkTimeAccess;
-
+use App\Http\Middleware\checkAge;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,11 +17,11 @@ Route::get('/hello', function () {
 
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware(checkTimeAccess::class);
+});
 Route::post('/checklogin', [ProductController::class, 'checkLogin']);
 
-Route::get('/signin', [AuthController::class, 'signIn']);
-Route::post('/check-signin', [AuthController::class, 'checkSignIn']);
+Route::get('/signup', [AuthController::class, 'signUp']);
+Route::post('/check-signup', [AuthController::class, 'checkSignUp']);
 
 Route::get('/under-age', function () {
     return 'Bạn chưa đủ 13 tuổi ';
@@ -31,7 +31,7 @@ Route::get('/teen', function () {
     return 'Khu vực dành cho thiếu niên ';
 });
 
-Route::prefix('product')->middleware([checkTimeAccess::class])->group(function () {
+Route::prefix('product')->middleware([checkTimeAccess::class, checkAge::class])->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product.index');
         Route::get('/add', 'create')->name('product.add');

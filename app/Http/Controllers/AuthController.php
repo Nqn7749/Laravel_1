@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function signIn()
+    public function signUp()
     {
-        return view('signin');
+        return view('auth.signup');
     }
 
-    public function checkSignIn(Request $request)
+    public function checkSignUp(Request $request)
     {
         $username = $request->username;
         $password = $request->password;
@@ -26,10 +26,10 @@ class AuthController extends Controller
             $password === '123456' &&
             $repass   === '123456' &&
             $mssv     === '0093667' &&
-            $lop      === '67PM1' &&
+            $lop      === '67pm1' &&
             $gioitinh === 'nam'
         ) {
-            return "Đăng ký thành công!";
+            return redirect('/login');
         }
 
         return "Đăng ký thất bại";

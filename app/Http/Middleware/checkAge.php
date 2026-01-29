@@ -15,12 +15,18 @@ class checkAge
      */
     public function handle(Request $request, Closure $next): Response
     {
+        
+
         if (!session()->has('age')) {
             return redirect('/login');
         }
 
         $age = session('age');
 
+        if (!is_numeric($age)) {
+        return redirect('/login');
+        }
+    
         if ($age < 13) {
             return redirect('/under-age');
         } elseif ($age < 18) {

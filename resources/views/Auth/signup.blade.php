@@ -8,7 +8,7 @@
 
 <h2>Đăng ký tài khoản</h2>
 
-<form method="POST" action="/check-signin">
+<form method="POST" action="/check-signup">
     @csrf
 
     <p>
@@ -44,7 +44,7 @@
         </select>
     </p>
 
-    <button type="submit">Sign In</button>
+    <button type="submit">Sign Up</button>
 </form>
 
 </body>
