@@ -46,7 +46,7 @@ class ProductController extends Controller implements HasMiddleware
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if($username === 'nghianq' && $password === '0093667'){
+        if($username === 'nghianq' && $password === '123456'){
             return 'Đăng nhập thành công';
         } else {
             return 'Đăng nhập thất bại';

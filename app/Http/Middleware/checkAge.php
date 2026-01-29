@@ -15,20 +15,16 @@ class checkAge
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->has('age')) {
+        if (!session()->has('age')) {
+            return response('Không được phép truy cập');
+        }
+
+        $age = session('age');
+
+        if (!is_numeric($age) || $age < 18) {
+            return response('Không được phép truy cập');
+        }
+
         return $next($request);
-    }
-
-    $age = (int) $request->age;
-
-    if ($age < 13) {
-        return redirect('/under-age');
-    }
-
-    if ($age < 18) {
-        return redirect('/teen');
-    }
-
-    return $next($request);
     }
 }

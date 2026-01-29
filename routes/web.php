@@ -17,8 +17,10 @@ Route::get('/hello', function () {
 Route::get('/login', function () {
     return view('login');
 })->middleware(checkTimeAccess::class);
-
 Route::post('/checklogin', [ProductController::class, 'checkLogin']);
+
+Route::get('/signin', [AuthController::class, 'signIn']);
+Route::post('/check-signin', [AuthController::class, 'checkSignIn']);
 
 Route::get('/under-age', function () {
     return 'Bạn chưa đủ 13 tuổi ';
