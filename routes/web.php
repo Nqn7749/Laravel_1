@@ -11,14 +11,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return view('hello');
-});
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
-Route::post('/checklogin', [AuthController::class, 'checkLogin']);
+Route::get('/login', [AuthController::class,'Login']);
+Route::post('/checklogin', [AuthController::class, 'checkLogin'])->name('checkLogin');
 
 Route::get('/signup', [AuthController::class, 'signUp']);
 Route::post('/check-signup', [AuthController::class, 'checkSignUp']);
@@ -31,7 +26,7 @@ Route::get('/teen', function () {
     return 'Khu vực dành cho thiếu niên ';
 });
 
-Route::prefix('product')->middleware([checkTimeAccess::class, checkAge::class])->group(function () {
+Route::prefix('product')->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/', 'index')->name('product.index');
         Route::get('/add', 'create')->name('product.add');
@@ -52,6 +47,9 @@ Route::get('/banco/{n}', function ($n) {
     return view('banco', compact('n'));
 });
 
+Route::get('/admin', function () {
+    return redirect()->route('product.index');
+});
 
 Route::fallback(function () {
     return view('error.404');

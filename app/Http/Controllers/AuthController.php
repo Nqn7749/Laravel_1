@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function signUp()
+    public function Login()
     {
+        return view('auth.login');
+    }
+
+    public function signup(){
         return view('auth.signup');
+    }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 
     public function checkSignUp(Request $request)
@@ -36,15 +49,9 @@ class AuthController extends Controller
     }
 
     public function checkLogin(Request $request){
-        $username = $request->input('username');
-        $password = $request->input('password');
-        $age = $request->input('age');
-
-        if($username === 'nghianq' && $password === '123456'){
-            session(['age' => $age]);
-            return redirect('/product');
-        } else {
-            return back()->with('error', 'Đăng nhập thất bại');
-        }
+        $account = $request->only('email', 'password');
+        if(Auth::attempt($account)){
+            return redirect('/admin');
+        };
     }
 }
