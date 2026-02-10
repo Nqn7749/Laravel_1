@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Middleware\checkTimeAccess;
 use App\Http\Middleware\checkAge;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,10 @@ Route::get('/banco/{n}', function ($n) {
 
 Route::get('/admin', function () {
     return redirect()->route('product.index');
+});
+
+Route::prefix('admin')->group(function () {
+    Route::resource('category', CategoryController::class);
 });
 
 Route::fallback(function () {

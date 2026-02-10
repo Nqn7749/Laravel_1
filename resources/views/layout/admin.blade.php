@@ -1,19 +1,25 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard 3</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="adminLTE/plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="adminLTE/dist/css/adminlte.min.css">
+  <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/fontawesome-free/css/all.min.css') }}">
+
+    <!-- IonIcons -->
+    <link rel="stylesheet"
+          href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="{{ asset('adminLTE/dist/css/adminlte.min.css') }}">
+
 </head>
 <!--
 `body` tag options:
@@ -86,20 +92,25 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
+<!-- ================= SCRIPTS ================= -->
 
 <!-- jQuery -->
-<script src="adminLTE/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE -->
-<script src="adminLTE/dist/js/adminlte.js"></script>
+<script src="{{ asset('adminLTE/plugins/jquery/jquery.min.js') }}"></script>
 
-<!-- OPTIONAL SCRIPTS -->
-<script src="adminLTE/plugins/chart.js/Chart.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="adminLTE/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="adminLTE/dist/js/pages/dashboard3.js"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- AdminLTE App -->
+<script src="{{ asset('adminLTE/dist/js/adminlte.min.js') }}"></script>
+
+<!-- ChartJS (nếu dùng dashboard) -->
+<script src="{{ asset('adminLTE/plugins/chart.js/Chart.min.js') }}"></script>
+
+<!-- AdminLTE demo (có thể bỏ) -->
+<script src="{{ asset('adminLTE/dist/js/demo.js') }}"></script>
+
+<!-- AdminLTE dashboard demo (có thể bỏ) -->
+<script src="{{ asset('adminLTE/dist/js/pages/dashboard3.js') }}"></script>
+
 </body>
 </html>
