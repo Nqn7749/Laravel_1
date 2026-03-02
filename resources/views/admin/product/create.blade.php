@@ -3,12 +3,11 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3>Cập nhật sản phẩm</h3>
+        <h3>Thêm sản phẩm</h3>
     </div>
 
-    <form action="{{ route('product.update', $product->id) }}" method="POST">
+    <form action="{{ route('product.store') }}" method="POST">
         @csrf
-        @method('PUT')
 
         <div class="card-body">
 
@@ -18,7 +17,7 @@
                 <input type="text"
                        name="name"
                        class="form-control @error('name') is-invalid @enderror"
-                       value="{{ old('name', $product->name) }}">
+                       value="{{ old('name') }}">
 
                 @error('name')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -33,7 +32,7 @@
                     <option value="">-- Chọn danh mục --</option>
                     @foreach($categories as $cat)
                         <option value="{{ $cat->id }}"
-                            {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>
+                            {{ old('category_id') == $cat->id ? 'selected' : '' }}>
                             {{ $cat->name }}
                         </option>
                     @endforeach
@@ -51,7 +50,7 @@
                        step="0.01"
                        name="price"
                        class="form-control @error('price') is-invalid @enderror"
-                       value="{{ old('price', $product->price) }}">
+                       value="{{ old('price') }}">
 
                 @error('price')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -65,7 +64,7 @@
                        step="0.01"
                        name="sale_price"
                        class="form-control @error('sale_price') is-invalid @enderror"
-                       value="{{ old('sale_price', $product->sale_price) }}">
+                       value="{{ old('sale_price') }}">
 
                 @error('sale_price')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -78,7 +77,7 @@
                 <input type="number"
                        name="stock"
                        class="form-control @error('stock') is-invalid @enderror"
-                       value="{{ old('stock', $product->stock) }}">
+                       value="{{ old('stock', 0) }}">
 
                 @error('stock')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -90,19 +89,17 @@
                 <label>Mô tả</label>
                 <textarea name="description"
                           class="form-control"
-                          rows="3">{{ old('description', $product->description) }}</textarea>
+                          rows="3">{{ old('description') }}</textarea>
             </div>
 
             {{-- Trạng thái --}}
             <div class="form-group">
                 <label>Trạng thái</label>
                 <select name="is_active" class="form-control">
-                    <option value="1"
-                        {{ old('is_active', $product->is_active)==1?'selected':'' }}>
+                    <option value="1" {{ old('is_active',1)==1?'selected':'' }}>
                         Hoạt động
                     </option>
-                    <option value="0"
-                        {{ old('is_active', $product->is_active)==0?'selected':'' }}>
+                    <option value="0" {{ old('is_active')==="0"?'selected':'' }}>
                         Ẩn
                     </option>
                 </select>
@@ -111,7 +108,7 @@
         </div>
 
         <div class="card-footer">
-            <button class="btn btn-primary">Cập nhật</button>
+            <button class="btn btn-success">Lưu</button>
             <a href="{{ route('product.index') }}" class="btn btn-secondary">
                 Quay lại
             </a>

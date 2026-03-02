@@ -2,62 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Middleware\checkTimeAccess;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Product;
+use App\Models\Category;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller implements HasMiddleware
+class ProductController extends Controller
 {
-    public static function middleware(): array{
-        return [
-            checkTimeAccess::class,
-        ];
-    }
-    public function index(){
-        
-        $product = Product::all();
-        return view('admin.product.index', ['products' => $product, 'title'=> 'Product List']);
+    public function index(Request $request)
+    {
+        $query = Product::with('category')
+            ->where('is_delete', 0);
+
+        // Lọc theo keyword
+        if ($request->keyword) {
+            $query->where('name', 'like', '%' . $request->keyword . '%');
+        }
+
+        // Lọc theo category
+        if ($request->category_id) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $products = $query->get();
+        $categories = Category::where('is_delete', 0)->get();
+
+        return view('admin.product.index', compact('products', 'categories'));
     }
 
-    public function getDetail(string $id = '123'){
-        return view('admin.product.detail', ['id' => $id]);
-    }
-
-    public function create(){
-        return view('admin.product.add');
+    public function create()
+    {
+        $categories = Category::where('is_delete', 0)->get();
+        return view('admin.product.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $product = new Product();
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0|lte:price',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'is_active' => 'nullable|boolean'
+        ]);
 
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->stock = $request->stock;
-        $product->save();
+        $data['is_delete'] = 0;
+        $data['is_active'] = $data['is_active'] ?? 1;
 
-        return redirect()->route('product.index');
+        Product::create($data);
 
+        return redirect()->route('product.index')
+            ->with('success', 'Thêm sản phẩm thành công');
     }
 
-    public function edit(string $id){
-        $product = Product::find($id);
-        return view('admin.product.edit', ['product' => $product]);
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = Category::where('is_delete', 0)->get();
+
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
-        $product->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'stock' => $request->stock,
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'nullable|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0|lte:price',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'is_active' => 'nullable|boolean'
         ]);
 
-        return redirect()->route('product.index');
+        $product->update($data);
+
+        return redirect()->route('product.index')
+            ->with('success', 'Cập nhật sản phẩm thành công');
     }
 
+    public function destroy($id)
+    {
+        Product::findOrFail($id)->update([
+            'is_delete' => 1
+        ]);
+
+        return redirect()->route('product.index')
+            ->with('success', 'Xóa sản phẩm thành công');
+    }
 }
